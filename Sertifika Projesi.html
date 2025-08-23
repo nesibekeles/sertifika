@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Düğün.com İş Ortağı Yetkinlik ve Liyakat Programı</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FEF2F2; /* Açık pembe arka plan */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .flow-card {
+            border-left: 4px solid #db0962;
+            transition: all 0.3s ease;
+        }
+        .flow-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(219, 9, 98, 0.1), 0 4px 6px -2px rgba(219, 9, 98, 0.05);
+        }
+        .kpi-card {
+            transition: all 0.3s ease;
+            border-bottom: 4px solid transparent;
+        }
+        .kpi-card:hover {
+            transform: scale(1.05);
+            border-bottom-color: #db0962;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #db0962, #F973AC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-primary {
+            color: #db0962;
+        }
+	.preview-card img {
+            height: 150px; /* Tüm görseller için sabit yükseklik */
+            width: 100%;
+            object-fit: cover; /* Görüntünün bozulmadan alanı kaplamasını sağlar */
+            object-position: top; /* Dikey görsellerin üst kısmını gösterir */
+        }
+        .tab-button {
+            padding: 1rem 1.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            color: #4B5563; /* gray-600 */
+        }
+        .tab-button.active {
+            color: #db0962;
+            border-bottom-color: #db0962;
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            transition: all 0.2s ease;
+        }
+        .todo-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .todo-item input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0.75rem;
+            accent-color: #db0962;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <div class="text-center my-8">
+            <img src="https://dugun.com/assets/images/logo/dugun.svg" alt="Düğün.com Logo" class="mx-auto h-20 w-auto">
+        </div>
+
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-4xl md:text-6xl font-black gradient-text">Düğün.com Sertifika Projesi</h1>
+            <p class="text-lg md:text-xl text-gray-600 mt-4 max-w-3xl mx-auto">İş ortaklarımızın başarısını taçlandırıyor, sektörün standartlarını yeniden belirliyoruz.</p>
+        </header>
+        
+        <div class="w-full mb-10">
+            <div class="flex justify-center border-b border-gray-300">
+                <button id="tab-genel-bakis" class="tab-button active" onclick="switchTab('genel-bakis')">Genel Bakış</button>
+                <button id="tab-faz1" class="tab-button" onclick="switchTab('faz1')">Faz 1 Detaylar</button>
+            </div>
+        </div>
+
+        <div id="content-area">
+            <div id="genel-bakis-content">
+                <section id="neden" class="mb-16">
+                    <h2 class="text-3xl font-bold text-center mb-10">Stratejik Amaç: Neden Yapıyoruz?</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="kpi-card bg-white p-6 rounded-xl shadow-lg text-center">
+                            <div class="text-5xl mb-4">🤝</div>
+                            <h3 class="text-xl font-bold mb-2">Bağlılığı Artırmak</h3>
+                            <p class="text-gray-600">Uzun süreli iş ortaklarımızı onurlandırarak Düğün.com'a olan aidiyetlerini güçlendirmek.</p>
+                        </div>
+                        <div class="kpi-card bg-white p-6 rounded-xl shadow-lg text-center">
+                            <div class="text-5xl mb-4">👑</div>
+                            <h3 class="text-xl font-bold mb-2">Prestij Kazandırmak</h3>
+                            <p class="text-gray-600">İş ortaklarımızın Düğün.com sayesinde prestijli bir konumda hissetmelerini sağlamak.</p>
+                        </div>
+                        <div class="kpi-card bg-white p-6 rounded-xl shadow-lg text-center">
+                            <div class="text-5xl mb-4">🛡️</div>
+                            <h3 class="text-xl font-bold mb-2">Panelin Etkin Kullanımını Sağlamak</h3>
+                            <p class="text-gray-600">Sıralama ve ödüllerle motivasyon yaratmak; oyunlaştırma ile verimi yükseltmek.</p>
+                        </div>
+                        <div class="kpi-card bg-white p-6 rounded-xl shadow-lg text-center">
+                            <div class="text-5xl mb-4">⭐</div>
+                            <h3 class="text-xl font-bold mb-2">Topluluk Yaratmak</h3>
+                            <p class="text-gray-600">Sektörde standartları belirleyen, iş ortaklarını geliştiren bir community rolü üstlenmek.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="kim-icin" class="mb-16">
+                    <h2 class="text-3xl font-bold text-center mb-10">Hedef Kitlemiz: Kimler İçin?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="bg-white p-8 rounded-xl shadow-lg">
+                            <h3 class="text-2xl font-bold mb-4 text-center">İş Ortağı Profili</h3>
+                            <p class="text-gray-600 text-center mb-6">Sertifika Programı, Düğün.com'daki tüm aktif iş ortaklarımızı kapsayacak şekilde, üç ana gruba odaklanarak tasarlandı.</p>
+                            <div class="chart-container">
+                                <canvas id="hedefKitleChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="bg-white p-6 rounded-xl shadow-md">
+                                <h4 class="text-xl font-bold text-primary">İleri Seviye Tecrübeli İş Ortakları (3+ Yıl)</h4>
+                                <p class="text-gray-600 mt-2">Platforma olan sadakatleri ve uzun yıllar süren katkıları sebebiyle, ileri seviye sertifika almaya hak kazanırlar.</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-md">
+                                <h4 class="text-xl font-bold text-primary">Tecrübeli İş Ortakları (1-3 Yıl)</h4>
+                                <p class="text-gray-600 mt-2">Platforma olan sadakatleri ve uzun süreli katkıları sebebiyle, giriş seviye sertifika almaya direkt olarak hak kazanırlar.</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-md">
+                                <h4 class="text-xl font-bold text-primary">Gelişim Odaklı İş Ortakları</h4>
+                                <p class="text-gray-600 mt-2">Platform kullanım yetkinliklerini kanıtlamak ve kariyerlerinde bir adım öne geçmek için eğitim ve sınav sürecimize dahil olarak sertifika almaya hak kazanırlar.</p>
+                            </div>
+                        </div>
+                    </div> 
+                </section>
+
+                <section id="ciktilar" class="mb-16">
+                    <h2 class="text-3xl font-bold text-center mb-10">Proje Aşamaları: Neler Yapacağız?</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-center">
+                        <div class="bg-white p-4 rounded-xl shadow-lg">
+                            <div class="text-4xl mb-3">📜</div><h4 class="font-bold">Tecrübe Sertifikası</h4>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-lg">
+                            <div class="text-4xl mb-3">🏅</div><h4 class="font-bold">Sınav Sertifikası</h4>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-lg">
+                            <div class="text-4xl mb-3">🚀</div><h4 class="font-bold">Yarışma ve Ödüller</h4>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-lg">
+                            <div class="text-4xl mb-3">🎓</div><h4 class="font-bold">Düğün.com Community</h4>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="nasil" class="mb-16">
+                    <h2 class="text-3xl font-bold text-center mb-10">Proje Yol Haritası: Nasıl Yapacağız?</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-6 text-center">FAZ 1: Tecrübe Sertifikası (Ağustos 2025)</h3>
+                            <div class="space-y-4">
+                                <div class="flow-card bg-white p-4 rounded-lg shadow-sm">
+                                    <p><span class="font-bold">1. Tasarım:</span> Prestijli sertifika tasarımları finalize edilir ve basılır.</p>
+                                </div>
+                                <div class="flow-card bg-white p-4 rounded-lg shadow-sm">
+                                    <p><span class="font-bold">2. İletişim:</span> Kişiye özel e-posta ve sosyal medya paylaşımları hazırlanır.</p>
+                                </div>
+                                <div class="flow-card bg-white p-4 rounded-lg shadow-sm">
+                                    <p><span class="font-bold">3. Lansman (29 Ağustos):</span> Sertifikalar kargolanır ve dijital duyurular yapılır.</p>
+                                </div>
+                                 <div class="flow-card bg-white p-4 rounded-lg shadow-sm">
+                                    <p><span class="font-bold">4. Feedback ve Geliştirmeler:</span> Firmaların geri bildirimlerinin takip edilmesi ve asıl hedef olan community'e doğru gitmek için düzenli geliştirmeler yapılması.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-6 text-center">FAZ 2: Sınava Tabi Sertifikasyon (Eylül 2025)</h3>
+                            <div class="space-y-4">
+                                <div class="flow-card bg-white p-4 rounded-lg shadow-sm">
+                                    <p><span class="font-bold">1. İçerik Üretimi:</span> Panel kullanımı üzerine 4 ana modülde video eğitimler ve sorular netleşir.</p>
+                                </div>
+                                <div class="flow-card bg-white p-4 rounded-lg shadow-sm">
+                                    <p><span class="font-bold">2. Sınav Altyapısı:</span> Online sınav platformu kurulur.</p>
+                                </div>
+                                <div class="flow-card bg-white p-4 rounded-lg shadow-sm">
+                                    <p><span class="font-bold">3. Davetiye (22 Eylül):</span> 1 yıldan az süredir iş ortağımız olan firma yetkilileri sınava davet edilir.</p>
+                                </div>
+                                <div class="flow-card bg-white p-4 rounded-lg shadow-sm">
+                                    <p><span class="font-bold">4. Sertifika Gönderimi:</span> Sınavda başarılı olanlara sertifika gönderimi yapılır ve yeni firmalar için aylık olarak devam eder.</p>
+                                </div>
+                            </div>
+                        </div>
+                </section>
+
+                <section class="mb-16">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-6 text-center">FAZ 3: Yarışma ve Ödüller (Ekim 2025)</h3>
+                            <div class="space-y-4">
+                                <div class="flow-card bg-white p-4 rounded-lg shadow-sm">
+                                    <p><span class="font-bold">1. Kurallar:</span> Yarışma kurgusu, kazanma kuralları ve ödüller netleştirilir.</p>
+                                </div>
+                                <div class="flow-card bg-white p-4 rounded-lg shadow-sm">
+                                    <p><span class="font-bold">2. İş Geliştirme:</span> Yarışma platformu hazırlanır.</p>
+                                </div>
+                                <div class="flow-card bg-white p-4 rounded-lg shadow-sm">
+                                    <p><span class="font-bold">3. Lansman (27-31 Ekim):</span> Tüm Düğün.com iş ortaklarına yarışma duyurusu yapılır ve ilk döngü başlar.</p>
+                                </div>
+                                 <div class="flow-card bg-white p-4 rounded-lg shadow-sm">
+                                    <p><span class="font-bold">4. Sonuçların Açıklanması:</span> Kazananlar açıklanır ve ilk ödüller sahipleriyle buluşur.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-6 text-center">FAZ 4: Düğün.com Community (TBD)</h3>
+                            <div class="space-y-4">
+                                <div class="flow-card bg-white p-4 rounded-lg shadow-sm">
+                                    <p><span class="font-bold">TBD:</span> 2026 hedefi.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="gelecek">
+                    <h2 class="text-3xl font-bold text-center mb-10">Gelecek Vizyonu: Bizi Neler Bekliyor?</h2>
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                            <div>
+                                <h4 class="text-lg font-bold text-primary">Elçi Topluluğu</h4>
+                                <p class="text-gray-600 mt-1">En başarılı firmalar için özel avantajlar sunan bir topluluk.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-primary">Yıllık Ödül Töreni</h4>
+                                <p class="text-gray-600 mt-1">Yılın en iyilerinin ödüllendirildiği prestijli bir "Wedding Awards" etkinliği.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-primary">Gelişmiş Eğitimler</h4>
+                                <p class="text-gray-600 mt-1">Sadece panel değil, sektöre özel ileri seviye uzmanlık eğitimleri.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <div id="faz1-content" class="hidden">
+               <section id="tasarim-opsiyonlari" class="mb-16">
+                    <h2 class="text-3xl font-bold text-center mb-10">Final İçerikler</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 items-start">
+                        <div class="bg-white p-4 rounded-xl shadow-lg text-center cursor-pointer transform hover:scale-105 transition-transform duration-300 preview-card">
+                            <h3 class="text-lg font-bold mb-2">Sertifika</h3>
+                            <img src="https://github.com/nesibekeles/sertifika/blob/main/Sertifika.png?raw=true" alt="Final Sertifika Tasarımı" class="rounded-md shadow-sm">
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-lg text-center cursor-pointer transform hover:scale-105 transition-transform duration-300 preview-card">
+                            <h3 class="text-lg font-bold mb-2">Tebrik Kartı</h3>
+                            <img src="https://github.com/nesibekeles/sertifika/blob/main/not-2.png?raw=true" alt="Tebrik Kartı Tasarımı" class="rounded-md shadow-sm">
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-lg text-center cursor-pointer transform hover:scale-105 transition-transform duration-300 preview-card">
+                            <h3 class="text-lg font-bold mb-2">Fiziksel Görünüm</h3>
+                            <img src="https://github.com/nesibekeles/sertifika/blob/main/%C3%87er%C3%A7eveli%20Sertifika.jpeg?raw=true" alt="Örnek Tasarım 1" class="rounded-md shadow-sm opacity-60">
+                        </div>
+                         <div class="bg-white p-4 rounded-xl shadow-lg text-center cursor-pointer transform hover:scale-105 transition-transform duration-300 preview-card">
+                            <h3 class="text-lg font-bold mb-2">Fiziksel Görünüm</h3>
+                            <img src="https://github.com/nesibekeles/sertifika/blob/main/Tebrik%20Kart%C4%B1.jpeg?raw=true" alt="Örnek Tasarım 2" class="rounded-md shadow-sm opacity-60">
+                        </div>
+                    </div>
+                </section>
+
+			<div id="image-modal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center p-4 z-50 transition-opacity duration-300">
+                    <div class="bg-white p-2 rounded-lg shadow-2xl w-auto h-auto max-w-4xl relative flex items-center justify-center">
+                        <img id="modal-image" src="" alt="Büyük Önizleme" 
+                             style="display: block; max-width: 100%; max-height: 88vh; object-fit: contain;">
+                        <button id="modal-close" class="absolute -top-4 -right-4 bg-white rounded-full p-1 text-3xl w-10 h-10 leading-none text-gray-800 hover:text-red-500 hover:scale-110 transition-transform">&times;</button>
+                    </div>
+                </div>
+                
+               <section id="isim-opsiyonlari" class="mb-16">
+    <h2 class="text-3xl font-bold text-center mb-10">İsim Opsiyonları</h2>
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <p class="text-center text-gray-600 mb-8">Sertifika programımız için potansiyel isimler aşağıda başlangıç ve ileri seviye olarak iki gruba ayrılıyor.</p>
+
+        <div>
+            <h3 class="text-xl font-bold mb-4 text-primary">Başlangıç Seviyesi İsim Opsiyonları</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <label class="todo-item"><input type="checkbox" name="isim"> Dijital Kanal Yönetim Sertifikası</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> Dijital Yönetim Sertifikası</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> Sertifikalı Düğün.com Uzmanı</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> Dijital Yetkinlik Sertifikası</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> İş Ortağı Sertifikası</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> Sertifikalı Düğün Uzmanı</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> Dijital Partner Sertifikası</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> Dijital Yönetim ve Satış Uzmanlığı Sertifikası</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> Satış Partneri Sertifikası</label>
+            </div>
+        </div>
+
+        <div class="mt-10">
+            <h3 class="text-xl font-bold mb-4 text-primary">İleri Seviye İsim Opsiyonları</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <label class="todo-item"><input type="checkbox" name="isim"> Profesyonel Düğün.com Uzmanı</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> İleri Seviye Dijital Yönetim Sertifikası</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> Sertifikalı Düğün.com Partneri</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> Profesyonel Dijital Yetkinlik Sertifikası</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> Kıdemli(Elit) İş Ortağı Sertifikası</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> Sertifikalı Lider Düğün Uzmanı</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> Lider Dijital Partner Sertifikası</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> Dijital Yönetim ve Satış Liderliği Sertifikası</label>
+                <label class="todo-item"><input type="checkbox" name="isim"> Stratejik Partner Sertifikası</label>
+            </div>
+        </div>
+    </div>
+</section>
+
+                <section id="olasi-problemler" class="mb-16">
+                    <h2 class="text-3xl font-bold text-center mb-10">Olası Problemler ve Çözüm Önerileri</h2>
+                    <div class="max-w-4xl mx-auto space-y-6">
+                        <div class="bg-white p-6 rounded-lg shadow-md flow-card">
+                            <h4 class="text-xl font-bold text-primary">Problem 1: Kıdemli Çalışanlarda Unvan Sorunu</h4>
+                            <p class="text-gray-700 mt-2"><strong>Senaryo:</strong> Bir firmadaki farklı unvanlara sahip (örneğin; müdür, uzman, yeni başlayan) çalışanlara aynı isimli sertifikanın gönderilmesi, unvanı yüksek kişilerde değersizlik hissi yaratabilir.</p>
+                            <p class="text-gray-800 mt-3 font-semibold">💡 Çözüm Önerisi:</p>
+                            <p class="text-gray-700 mt-1">Sertifika isimlerinde kişisel unvan belirtmekten kaçınıp, "İş Ortağı" gibi genel veya "Dijital Platform Başarısı" gibi sürece odaklı, unvandan bağımsız ve daha kapsayıcı ifadeler kullanmak.</p>
+                        </div>
+                         <div class="bg-white p-6 rounded-lg shadow-md flow-card">
+                            <h4 class="text-xl font-bold text-primary">Problem 2: İsim veya Lojistik Hatalar</h4>
+                            <p class="text-gray-700 mt-2"><strong>Senaryo:</strong> Sertifikalardaki isimlerin hatalı gitmesi, kargoda kaybolması, hasar görmesi veya yanlış adrese teslim edilmesi.</p>
+                            <p class="text-gray-800 mt-3 font-semibold">💡 Çözüm Önerisi:</p>
+                            <p class="text-gray-700 mt-1">İsim ve adresleri öncesinde PY ile teyit etmek. Tüm gönderileri takip numaralarını mutlaka kaydetmek. Hasarlı/Hatalı teslimatlar için firmaya hızlı ve net bir yeniden gönderim süreci oluşturmak. Özür dilemekten kaçınmamak.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md flow-card">
+                            <h4 class="text-xl font-bold text-primary">Problem 4: Düşük Etkileşim ve Değer Algısı</h4>
+                            <p class="text-gray-700 mt-2"><strong>Senaryo:</strong> İş ortaklarının sertifikayı bir "değer" olarak görmeyip sosyal medyada paylaşmaması, ofislerinde sergilememesi ve projenin ana hedeflerinden olan "prestij kazandırma" amacına ulaşılamaması.</p>
+                            <p class="text-gray-800 mt-3 font-semibold">💡 Çözüm Önerisi:</p>
+                            <p class="text-gray-700 mt-1">İletişim planında, sertifikanın nasıl kullanılacağına dair örnekler sunmak + hızlı bir şekilde paylaşmaları için otomatik linkler yaratmak. Kendi sosyal medya hesaplarımızda da promote etmek ve paylaşan/bizi etiketleyen kişileri re-post'lamak veya comment atmak. Sertifikalı kullanıcıların yanına sitede özel bir "Tecrübeli İş Ortağı" rozeti eklemek gibi somut değerler sunmak.</p>
+                        </div>
+                         <div class="bg-white p-6 rounded-lg shadow-md flow-card">
+                            <h4 class="text-xl font-bold text-primary">Problem 5: Geri Bildirim Yönetimi</h4>
+                            <p class="text-gray-700 mt-2"><strong>Senaryo:</strong> Lansman sonrası iş ortaklarından gelecek (olumlu/olumsuz) yoğun geri bildirimi yönetememek ve sonraki fazlar için önemli içgörüleri kaçırmak.</p>
+                            <p class="text-gray-800 mt-3 font-semibold">💡 Çözüm Önerisi:</p>
+                            <p class="text-gray-700 mt-1">Lansman duyurularında, geri bildirim için özel bir e-posta adresi (`sertifika-destek@dugun.com` gibi) veya bir form linki belirtmek. Gelen geri bildirimleri (teşekkür, şikayet, öneri) sistematik olarak kategorize edip Faz 2 ve 3'ün planlamasında kullanmak.</p>
+                        </div>
+                    </div>
+                </section>
+	
+	<section id="benchmarks" class="mb-16">
+    <h2 class="text-3xl font-bold text-center mb-10">Benchmarks</h2>
+    <div class="max-w-5xl mx-auto space-y-12">
+
+        <div>
+            <h3 class="text-2xl font-bold text-center mb-6 gradient-text">Sektörel</h3>
+            <div class="space-y-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-bold text-primary">1. Wedding MBA</h4>
+                    <p class="text-gray-700 mt-2">Düğün profesyonelleri için düzenlenen dünyanın en büyük yıllık konferansı ve fuarıymış. Hem WeddingPro hem Zola katılmış:</p>
+                    <ul class="list-disc list-inside mt-3 text-gray-600 space-y-2">
+                        <li>İsim: Wedding MBA 2025 - <a href="https://www.instagram.com/p/DJ1ztueRz1v/?hl=en" target="_blank" class="text-blue-600 hover:underline">Link</a></li>
+                        <li>İsim: Master Level of Certification / Master Level Wedding Planner & Designer - <a href="https://www.instagram.com/p/DHjzzvlot5o/?hl=en&img index=2" target="_blank" class="text-blue-600 hover:underline">Link</a></li>
+                        <li>İsim: Certified Wedding Pro / Certified Elite Level Wedding Planner & Designer - <a href="https://www.instagram.com/p/DE0f9r0Krxo/?hl=en" target="_blank" class="text-blue-600 hover:underline">Link</a></li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-bold text-primary">2. ZOLA</h4>
+                    <p class="text-gray-700 mt-2">Zola'da sertifika yok ama iki programı var.</p>
+                    <p class="text-gray-700 mt-2">Vendors Ambassadors programı için: genellikle davetiye ile alınıyor. Yüksek performans gösteren, sosyal medyada aktif olan ve Zola etkinliklerine katılan firmalar davet ediliyor.</p>
+                     <p class="text-gray-700 mt-2">En çok yorum alan / çiftler tarafından tercih edilen firmalara verilen ödül. Badge alıyorlar.</p>
+                    <ul class="list-disc list-inside mt-3 text-gray-600 space-y-2">
+                        <li>İsim: 2025 Zola for Vendors Ambassadors! - <a href="https://www.instagram.com/p/DIhgViaTGqD/?img index=5" target="_blank" class="text-blue-600 hover:underline">Link 1</a>, <a href="https://www.instagram.com/p/DExuZXZyrYW/?hl=en" target="_blank" class="text-blue-600 hover:underline">Link 2</a></li>
+                        <li>İsim: Best of Zola - <a href="https://www.zola.com/faq/10670665905805-who-is-eligible-for-a-best-of-zola-award-" target="_blank" class="text-blue-600 hover:underline">Link 1</a>, <a href="https://www.facebook.com/AbbeForeman Photography/posts/thrilled-to-share-that-ive-been-selected-as-a-2025-zola-for-vendors-ambassador-a/1355976409263707/" target="_blank" class="text-blue-600 hover:underline">Link 2</a></li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-bold text-primary">3. WeddingPro (Wedding wire / The Knot)</h4>
+                    <p class="text-gray-700 mt-2">Yine sertifika yok ama sosyal sorumluluk ve eğitim odaklı farklı programları var. Bir de yine Zola gibi çiftlerin tercihi ödülleri var.</p>
+                    <ul class="list-disc list-inside mt-3 text-gray-600 space-y-2">
+                        <li>İsim: Best of weddings & Couples choice awards - <a href="https://www.instagram.com/p/DE505 RRem0/?img index $=1$" target="_blank" class="text-blue-600 hover:underline">Link</a></li>
+                        <li>İsim: Fellowship for a change - <a href="https://pros.weddingpro.com/about-us/fellowship-for-change/" target="_blank" class="text-blue-600 hover:underline">Link</a></li>
+                        <li>İsim: Wedding Pro Educators / WeddinPro Community - <a href="https://pros.weddingpro.com/blog/news-and-events/2023-educators/" target="_blank" class="text-blue-600 hover:underline">Link</a></li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-bold text-primary">4. Sektördeki Diğerleri</h4>
+                    <ul class="list-disc list-inside mt-3 text-gray-600 space-y-2">
+                        <li>CWIP: Certified Wedding Industry Professional - <a href="https://www.certplace.com/certifications/certified-wedding-industry-professional-cwip/" target="_blank" class="text-blue-600 hover:underline">Link</a></li>
+                        <li>CWP Society: Certified Wedding Planner - <a href="https://www.instagram.com/p/DNGsSn7vmpD/" target="_blank" class="text-blue-600 hover:underline">Link</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-2xl font-bold text-center mt-12 mb-6 gradient-text">Sektör Dışı</h3>
+            <div class="space-y-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-bold text-primary">1. Google</h4>
+                    <p class="text-gray-700 mt-2">Partner programı var. İki aşamalı bir yapıları var. "Premier Partner", en yüksek performansı gösteren, en seçkin %3'lük dilime veriliyor. Ayrıca Google "Skillshop" adında bir eğitim ve sertifikasyon platformu sunuyor. Sınavla alınıyor, sınav sonrası 1 yıl geçerli oluyor.</p>
+                    <p class="text-gray-700 mt-2"><strong>Düğün.com Inspo:</strong> Biz de uzun vadede tüm bu projeyi "Düğün.com Partner" ismi ile bir alt marka haline getirebilir. Biz de sertifikaya 1 yıl geçerli / son geçerlilik tarihi vb ekleyebiliriz.</p>
+                    <ul class="list-disc list-inside mt-3 text-gray-600 space-y-2">
+                        <li>İsim: Google Partner / Google Premier Partner</li>
+                        <li>İsim: Google Ads Arama Ağı Sertifikası, Google Analytics Sertifikası vb.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-bold text-primary">2. Salesforce</h4>
+                    <p class="text-gray-700 mt-2">"Trailhead" adını verdikleri oyunlaştırılmış bir öğrenme platformu kullanıyorlar. Müşteriler, trails adı verilen öğrenme modüllerini tamamlıyor. Rozetler ve puanlar kazanıyor. Sonunda sınava giriyorlar (baya komplike gözetmen falan oluyor). Sınavı geçenler global bir sertifika alıyor.</p>
+                    <p class="text-gray-700 mt-2"><strong>Düğün.com Inspo:</strong> Biz de panelde görevleri tamamladıkça gamify edilmiş bir path izletebiliriz. Her item checklendikçe progress bar dolar. Hatta progress barda gelin damat birbirine yaklaşıyor falan olabilir; kavuştur çiftleri gibi..</p>
+                    <ul class="list-disc list-inside mt-3 text-gray-600 space-y-2">
+                        <li>İsim: Salesforce Certified Administrator, Salesforce Certified Platform Developer vb.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h4 class="text-xl font-bold text-primary">3. Booking.com</h4>
+                     <p class="text-gray-700 mt-2">Sertifika gibi değil ama sitede gösterdikleri bir rozetleri oluyor. Booking'in belirlediği hedeflere (Yüksek puan, yüksek rezervasyon vb) ulaşan tesislere bir davetiye gönderiyor. Kabul edenler bu rozeti alıp daha yüksek görünürlüğe sahip oluyorlar (daha yüksek komisyon ödüyorlarmış ama).</p>
+                     <ul class="list-disc list-inside mt-3 text-gray-600 space-y-2">
+                        <li>İsim: Preferred Partner Programme</li>
+                     </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h4 class="text-xl font-bold text-primary">4. Meta</h4>
+                     <p class="text-gray-700 mt-2">Meta'nın sertifika programı, ücretsiz eğitim + sınav ile kazanılıyor. Meta üstünden pazarlama faaliyeti yürüten tüm kullanıcılara açık. Business hesabı olması gerekiyor. Yine belirli süre geçerli, yenilenmesi gerekiyor.</p>
+                     <ul class="list-disc list-inside mt-3 text-gray-600 space-y-2">
+                        <li>Meta Certified Digital Marketing Associate (Giriş Seviyesi, spesifik kurslara değil de genel yetkinliğe girenler alıyor)</li>
+                        <li>Meta Certified Marketing Science Professional</li>
+                        <li>Meta Certified Community Manager</li>
+                     </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h4 class="text-xl font-bold text-primary">5. Cisco Webex</h4>
+                     <p class="text-gray-700 mt-2">Cisco da yine ücretli eğitim + sınavla global geçerliliği olan sertifikalar veriyor. Cisco / webex kullanan tüm iş ortaklarının adminleri katılabiliyor. Örneğin CCNA, CCNP), tüm dünyada IT sektöründe en saygın belgeler arasında yer alır ve belirli bir uzmanlık seviyesini garanti eder.</p>
+                     <p class="text-gray-700 mt-2">Sertifika isimleri (cisco certified + eğitim ismi):</p>
+                     <ul class="list-disc list-inside mt-3 text-gray-600 space-y-2">
+                        <li>Cisco Certified Specialist - Collaboration Core: Cisco iş birliği çözümlerinin temel altyapı bilgisine sahip.</li>
+                        <li>Cisco Certified Specialist - Collaboration Applications Implementation</li>
+                     </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h4 class="text-xl font-bold text-primary">6. Turkcell ve Vodafone:</h4>
+                     <p class="text-gray-700 mt-2">İkisi de kendi markasının kurumsal bulut vs ürünlerini satan teknoloji firmalarına veriyorlar. Firmalar kendisi başvuruyor, belirli bir satış hedefi ve eğitimleri geçince sertifika alıyorlar.</p>
+                     <ul class="list-disc list-inside mt-3 text-gray-600 space-y-2">
+                        <li>"Turkcell İş Ortağı Programı"</li>
+                        <li>"Vodafone Business Çözüm Ortağı"</li>
+                     </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h4 class="text-xl font-bold text-primary">7. Paraşüt (Finansal SaaS):</h4>
+                     <p class="text-gray-700 mt-2">Paraşüt, kendi yazılımını müşterilerine tavsiye eden, kurulumunu yapan ve danışmanlık veren mali müşavirler ve muhasebe profesyonelleri için bir program oluşturmuş. Eğitim akabinde sertifika alıyorlar. Daha çok müşteri öneriyor Paraşüt de onlara.</p>
+                     <ul class="list-disc list-inside mt-3 text-gray-600 space-y-2">
+                        <li>"Sertifikalı Paraşüt Danışmanı"</li>
+                     </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h4 class="text-xl font-bold text-primary">8. iPara/PayTR (Fintek SaaS):</h4>
+                     <ul class="list-disc list-inside mt-3 text-gray-600 space-y-2">
+                        <li>Sertifika isimleri: "Developer Certification", "Entegrasyon Partnerliği" veya "Onaylı Entegrasyon Ortağı"..</li>
+                     </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="text-center p-8 mt-8 border-t border-gray-200">
+        <p class="text-gray-600">&copy; 2025 Düğün.com - Her Düğün Düğün.com'la Başlar.</p>
+    </footer>
+
+    <script>
+        // Tab switching logic
+        function switchTab(tabName) {
+            const genelBakisContent = document.getElementById('genel-bakis-content');
+            const faz1Content = document.getElementById('faz1-content');
+            const genelBakisTab = document.getElementById('tab-genel-bakis');
+            const faz1Tab = document.getElementById('tab-faz1');
+
+            if (tabName === 'genel-bakis') {
+                genelBakisContent.classList.remove('hidden');
+                faz1Content.classList.add('hidden');
+                genelBakisTab.classList.add('active');
+                faz1Tab.classList.remove('active');
+            } else {
+                genelBakisContent.classList.add('hidden');
+                faz1Content.classList.remove('hidden');
+                genelBakisTab.classList.remove('active');
+                faz1Tab.classList.add('active');
+            }
+        }
+// Modal (Popup) logic
+        const modal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const closeModalBtn = document.getElementById('modal-close');
+        const previewCards = document.querySelectorAll('.preview-card');
+
+        previewCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const imgSrc = card.querySelector('img').src;
+                modalImage.src = imgSrc;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            });
+        });
+
+        const closeModal = () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            modalImage.src = ''; // Kaynağı temizle
+        };
+
+        closeModalBtn.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', (e) => {
+            // Sadece modal arka planına tıklandığında kapat
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        // Chart.js logic
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+
+        const wrapLabel = (label) => {
+            const maxLength = 16;
+            if (label.length <= maxLength) return label;
+            
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+
+            words.forEach(word => {
+                if ((currentLine + word).length > maxLength) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            });
+            lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const ctxKitle = document.getElementById('hedefKitleChart').getContext('2d');
+        new Chart(ctxKitle, {
+            type: 'doughnut',
+            data: {
+                labels: ['İleri Seviye Tecrübeli İş Ortakları (3+ Yıl)', 'Tecrübeli İş Ortakları (1-3 Yıl)', 'Gelişim Odaklı İş Ortakları'],
+                datasets: [{
+                    label: 'İş Ortağı Profili',
+                    data: [1000, 700, 900],
+                    backgroundColor: [
+                        '#db0962',
+                        '#fe3a89',
+                        '#F973AC',
+                    ],
+                    borderColor: '#FEF2F2',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                size: 14,
+                                family: "'Inter', sans-serif"
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
